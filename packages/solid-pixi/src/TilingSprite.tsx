@@ -15,6 +15,10 @@ export function TilingSprite<Data extends object = object>(props: TilingSpritePr
 
   const sprite = (ours.as || new pxTilingSprite(pixis)) as ExtendedTilingSprite<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(sprite)
+  }
+
   createEffect(() => {
     for (const prop in pixis) {
       ;(sprite as any)[prop] = (pixis as any)[prop]

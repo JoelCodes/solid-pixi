@@ -29,6 +29,9 @@ export function AnimatedSprite<Data extends object = object>(props: AnimatedSpri
   const sprite = (ours.as ||
     new pxAnimatedSprite(pixis.textures, pixis.autoUpdate)) as ExtendedAnimatedSprite<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(sprite)
+  }
   createEffect(() => {
     for (const prop in pixis) {
       ;(sprite as any)[prop] = (pixis as any)[prop]

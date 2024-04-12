@@ -16,6 +16,10 @@ export function Text<Data extends object = object>(props: TextProps<Data>) {
   const [ours, events, pixis] = splitProps(props, CommonPropKeys.concat('children'), EventTypes)
   const text = (ours.as || new pxText(pixis)) as ExtendedText<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(text)
+  }
+
   createEffect(() => {
     text.text = ours.children
   })

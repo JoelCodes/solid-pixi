@@ -14,6 +14,10 @@ export function Sprite<Data extends object = object>(props: SpriteProps<Data>) {
   const [ours, events, pixis] = splitProps(props, CommonPropKeys, EventTypes)
   const sprite = (ours.as || new pxSprite(pixis)) as ExtendedSprite<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(sprite)
+  }
+
   createEffect(() => {
     for (const prop in pixis) {
       ;(sprite as any)[prop] = (pixis as any)[prop]

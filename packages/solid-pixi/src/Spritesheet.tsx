@@ -7,7 +7,8 @@ import {
   createMemo,
   createResource,
   splitProps,
-  useContext
+  useContext,
+  createEffect
 } from 'solid-js'
 import { CommonPropKeys, type CommonProps } from './interfaces'
 
@@ -52,6 +53,13 @@ export function SpriteSheet<
     },
     { initialValue: ours.as }
   )
+
+  createEffect(() => {
+    const _spritesheet = spritesheet()
+    if (_spritesheet && typeof ours.ref === 'function') {
+      ours.ref(_spritesheet)
+    }
+  })
 
   return (
     <Suspense fallback={ours.fallback}>

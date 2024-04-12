@@ -32,6 +32,9 @@ export function Application(props: ApplicationProps) {
   createEffect(() => {
     const _app = app()
     if (!_app) return
+    if (typeof ours.ref === 'function') {
+      ours.ref(_app)
+    }
     let cleanups: (void | (() => void))[] = []
     const uses = props.uses
     if (uses) {

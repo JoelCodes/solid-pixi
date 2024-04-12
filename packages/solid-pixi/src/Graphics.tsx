@@ -1,5 +1,5 @@
 import { GraphicsContext, type GraphicsOptions, Graphics as pxGraphics } from 'pixi.js'
-import { createEffect, onCleanup, splitProps } from 'solid-js'
+import { type Ref, createEffect, onCleanup, splitProps, onMount } from 'solid-js'
 import { useParent } from './ParentContext'
 import { EventTypes, type Events } from './events'
 import { CommonPropKeys, type CommonProps } from './interfaces'
@@ -52,11 +52,9 @@ export function Graphics<Data extends object = object>(props: GraphicsProps<Data
 
   const graphics = (ours.as || new pxGraphics(pixis)) as ExtendedGraphics<Data>
 
-  createEffect(() => {
-    for (const prop in pixis) {
-      ;(graphics as any)[prop] = (pixis as any)[prop]
-    }
-  })
+  if (typeof ours.ref === 'function') {
+    ours.ref(graphics)
+  }
 
   createEffect(() => {
     if (ours.draw) {

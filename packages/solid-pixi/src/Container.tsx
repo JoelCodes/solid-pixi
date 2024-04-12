@@ -18,6 +18,10 @@ export function Container<Data extends object = object>(props: ContainerProps<Da
   ])
   const container = (ours.as || new pxContainer(pixis)) as ExtendedContainer<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(container)
+  }
+
   createEffect(() => {
     for (const prop in pixis) {
       ;(container as any)[prop] = (pixis as any)[prop]

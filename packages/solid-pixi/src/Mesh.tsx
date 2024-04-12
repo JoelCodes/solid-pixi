@@ -15,6 +15,9 @@ export function Mesh<Data extends object = object>(props: MeshProps<Data>) {
 
   const mesh = (ours.as || new pxMesh(pixis)) as ExtendedMesh<Data>
 
+  if (typeof ours.ref === 'function') {
+    ours.ref(mesh)
+  }
   createEffect(() => {
     for (const prop in pixis) {
       ;(Mesh as any)[prop] = (pixis as any)[prop]
